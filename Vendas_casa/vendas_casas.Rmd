@@ -1,11 +1,47 @@
 ---
-title: "R Notebook"
+title: "Desafio House Rocket"
 output: 
   html_notebook
   pdf_document
 ---
 
+# Importação dos dados
+```{r, eval=FALSE}
+setwd("D:\\07 04 2020\\Documents\\Edgar\\Projetos\\Data_sciece\\DataScience_projects\\Vendas_casa")
+library("tidyverse")
 
-```{r}
-plot(cars)
+dados<- read.csv("kc_house_data.csv", header = T)
+View(dados)
 ```
+
+# Limpeza e preparação dos dados
+```{r}
+```
+
+# Treinamento do modelo
+```{r}
+
+model<- lm(price~bedrooms+bathrooms+floors+waterfront,
+           data= dados)
+
+```
+
+# Avaliação da performance do modelo
+```{r}
+predito<-predict(model)
+per<- dados %>% select("id", "price")%>%
+  mutate(predito) %>% mutate(erro= price-predito )%>%
+  mutate(erro_abs= abs(erro))%>%mutate(erro_perc= erro/price)%>% mutate(erro_percabs= abs(erro_perc))
+View(per)
+
+# Calculando o erro medio absoluto e percentual medio
+erro_medio<- mean(per$erro_abs); erro_medio
+erro_percmed<- mean(per$erro_percabs); erro_percmed
+
+```
+
+
+
+
+
+
