@@ -2,7 +2,7 @@
 title: "Desafio House Rocket"
 output:
   html_document:
-    df_print: paged
+    
 ---
 
 # Importação dos dados
