@@ -14,22 +14,30 @@ dados<- read.csv("kc_house_data.csv", header = T)
 View(dados)
 ```
 
-# Limpeza e preparação dos dados
+# Preparação dos dados
+    Os dados são separados em treino e teste, sendo 80% para treinar o modelo e 20%
+ para treinar.
 ```{r}
+n_treino<- (80/100)*nrow(dados)
+set.seed(100)
+ua<- sample(n_treino)
+treino<- dados[ua,]; View(treino)
+teste<- dados[-ua,]; View(teste)
 ```
 
 # Treinamento do modelo
 ```{r}
 
 model<- lm(price~bedrooms+bathrooms+floors+waterfront,
-           data= dados)
+           data= treino)
+predict(model, teste)
 
 ```
 
 # Avaliação da performance do modelo
 ```{r}
 predito<-predict(model)
-per<- dados %>% select("id", "price")%>%
+per<- teste %>% select("id", "price")%>%
   mutate(predito) %>% mutate(erro= price-predito )%>%
   mutate(erro_abs= abs(erro))%>%mutate(erro_perc= erro/price)%>% mutate(erro_percabs= abs(erro_perc))
 View(per)
