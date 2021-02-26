@@ -47,6 +47,7 @@ View(per)
 # Calculando o erro medio absoluto e percentual medio
 erro_medio<- mean(per$erro_abs); erro_medio
 erro_percmed<- mean(per$erro_percabs); erro_percmed
+summary(per$erro_percabs)
 
 ```
 
