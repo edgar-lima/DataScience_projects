@@ -16,8 +16,8 @@ View(dados)
 ```
 
 # Preparação dos dados
-    Os dados são separados em treino e teste, sendo 80% para treinar o modelo e 20%
- para treinar.
+Os dados são separados em treino e teste, sendo 80% para treinar o modelo e 20%
+para treinar.
 ```{r}
 n_treino<- (70/100)*nrow(dados)
 set.seed(100)
@@ -38,7 +38,7 @@ View(predict(model, teste))
 
 # Avaliação da performance do modelo
 ```{r}
-predito<-predict(model,teste)
+predito<-predict(model2,teste)
 per<- teste %>% select("id", "price")%>%
   mutate(predito) %>% mutate(erro= price-predito )%>%
   mutate(erro_abs= abs(erro))%>%mutate(erro_perc= erro/price)%>% mutate(erro_percabs= abs(erro_perc))
@@ -49,6 +49,9 @@ erro_medio<- mean(per$erro_abs); erro_medio
 erro_percmed<- mean(per$erro_percabs); erro_percmed
 summary(per$erro_percabs)
 
+# Calculando o coeficiente de determinacao
+rsquad<- summary(model)
+rsquad$adj.r.squared
 ```
 
 
