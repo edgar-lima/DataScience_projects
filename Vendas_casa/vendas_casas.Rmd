@@ -7,7 +7,7 @@ output:
 ---
 
 # Importação dos dados
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 setwd("D:\\07 04 2020\\Documents\\Edgar\\Projetos\\Data_sciece\\DataScience_projects\\Vendas_casa")
 library("tidyverse")
 
@@ -17,17 +17,25 @@ View(dados)
 ```
 
 # Limpeza e Preparação dos dados
+
+```{r}
+a<- dados%>% select(hoa)%>%
+  str_replace_all(",",".")%>% str_remove_all("[R&$]")
+View(a)
+
+```
+
 Os dados são separados em treino e teste, sendo 80% para treinar o modelo e 20%
 para treinar.
 ```{r}
-dados<- dados%>%str_replace_all(",", ".")
-
 n_treino<- (70/100)*ndados
 set.seed(100)
 ua<- sample(n_treino)
 treino<- dados[ua,]; View(treino)
 teste<- dados[-ua,]; View(teste)
+
 ```
+
 
 # Treinamento do modelo
 ```{r}
@@ -54,7 +62,6 @@ summary(per$erro_percabs)
 rsquad<- summary(model)
 rsquad$adj.r.squared
 ```
-
 
 
 
