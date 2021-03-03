@@ -11,6 +11,8 @@ output:
 ```{r, eval=TRUE}
 setwd("D:\\07 04 2020\\Documents\\Edgar\\Projetos\\Data_sciece\\DataScience_projects\\Vendas_casa")
 library("tidyverse")
+library("rpart")
+library("randomForest")
 
 dados<- read.csv("houses_to_rent_v2.csv", header = T)
 ndados<-nrow(dados) 
@@ -77,14 +79,81 @@ Cálculo do coeficiente de determinação (R²), ele varia entre 0 e 1 e indica 
 # Calculando o coeficiente de determinacao
 resumo<- summary(model)
 r2<- resumo$adj.r.squared
-performance<- data.frame(erro_medio, erro_percmed,r2)
-performance
+per_mod<- data.frame(erro_medio, erro_percmed,r2)
+per_mod
 ```
 
 
 # Treinamento do modelo
 
-Treinamento do modelo utilizando 
+
+Treinamento do modelo utilizando árvore de regresão.
+
+```{r}
+model2<- rpart(total~., data = treino)
+```
+
+
+# Avaliação da performance do modelo
+
+Para a avaliação da performance do modelo foi utilizado duas métricas, sendo elas erro médio absoluto, percentual médio do erro absoluto. Também foi avaliado a distribuição dos erros dentro de quartis.
+
+```{r}
+predito<-predict(model2,teste)
+per2<- teste %>% select("city", "total")%>%
+  mutate(predito) %>% mutate(erro= total-predito )%>%
+  mutate(erro_abs= abs(erro))%>%mutate(erro_perc= erro/total)%>% 
+  mutate(erro_percabs= abs(erro_perc))
+per[,c(4:7)]<-round(per[,c(4:7)], 5)
+
+# Calculando o erro medio absoluto e percentual medio
+erro_medio2<- mean(per2$erro_abs)
+erro_percmed2<- mean(per2$erro_percabs)
+per_mod2<- data.frame(erro_medio2, erro_percmed2)
+per_mod2
+summary(per2$erro_percabs)
+```
+
+
+# Treinamento do modelo
+
+
+Treinamento do modelo utilizando Random Forest.
+
+```{r}
+model3<- randomForest(total~., data = treino,
+                      ntree= 100, proximity= T)
+```
+
+
+# Avaliação da performance do modelo
+
+Para a avaliação da performance do modelo foi utilizado duas métricas, sendo elas erro médio absoluto, percentual médio do erro absoluto. Também foi avaliado a distribuição dos erros dentro de quartis.
+
+```{r}
+predito<-predict(model3,teste)
+per3<- teste %>% select("city", "total")%>%
+  mutate(predito) %>% mutate(erro= total-predito )%>%
+  mutate(erro_abs= abs(erro))%>%mutate(erro_perc= erro/total)%>% 
+  mutate(erro_percabs= abs(erro_perc))
+per3[,c(4:7)]<-round(per3[,c(4:7)], 5)
+
+# Calculando o erro medio absoluto e percentual medio
+erro_medio3<- mean(per3$erro_abs)
+erro_percmed3<- mean(per3$erro_percabs)
+per_mod3<- data.frame(erro_medio3, erro_percmed3)
+
+summary(per3$erro_percabs)
+```
+
+# Comparação entre os três modelos
+```{r}
+per_mod1<- per_mod[,-3]
+
+rbind(per_mod1, per_mod2, per_mod3)
+```
+
+
 
 
 
