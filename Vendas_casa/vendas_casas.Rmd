@@ -18,14 +18,15 @@ View(dados)
 
 # Limpeza e Preparação dos dados
 
-\n Organização do cabeçalho para que seja possível manusear as variáveis com mais facilidade.
+Organização do cabeçalho para que seja possível manusear as variáveis com mais facilidade.
 ```{r}
 # Exlcuindo os caracteres ..R.. que estão depois do nome da variavel.
 cab<-names(dados)
 cab<-cab%>% str_remove_all("..R..")
 colnames(dados)<- cab
 ```
-\n Os dados são separados em treino e teste, sendo 80% para treinar e 20%
+
+Os dados são separados em treino e teste, sendo 80% para treinar e 20%
 para testar o modelo.
 ```{r}
 n_treino<- (70/100)*ndados
@@ -43,7 +44,7 @@ model<- lm(total~.,data= treino)
 ```
 
 # Avaliação da performance do modelo
-\n Para a avaliação da performance do modelo foi utilizado três métricas, sendo elas erro médio absoluto, percentual médio do erro absoluto e coeficiente de determinação (R²). Também foi avaliado a distribuição dos erros dentro de quartis.
+Para a avaliação da performance do modelo foi utilizado três métricas, sendo elas erro médio absoluto, percentual médio do erro absoluto e coeficiente de determinação (R²). Também foi avaliado a distribuição dos erros dentro de quartis.
 ```{r}
 predito<-predict(model,teste)
 per<- teste %>% select("city", "total")%>%
@@ -59,7 +60,7 @@ summary(per$erro_percabs)
 ```
 
 
-\n Cálculo do coeficiente de determinação (R²), ele varia entre 0 e 1 e indica o quão bem ajustado o modelo está, quanto mais préximo de 1 melhor a performance do modelo.
+Cálculo do coeficiente de determinação (R²), ele varia entre 0 e 1 e indica o quão bem ajustado o modelo está, quanto mais préximo de 1 melhor a performance do modelo.
 ```{r}
 # Calculando o coeficiente de determinacao
 resumo<- summary(model)
