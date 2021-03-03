@@ -26,9 +26,7 @@ cab<-cab%>% str_remove_all("..R..")
 colnames(dados)<- cab
 
 # Substituindo SÃ£o Paulo por Sao Paulo
-
-
-
+#dados<-str_replace_all(dados,"SÃ£o Paulo", "São Paulo")
 ```
 Os dados são separados em treino e teste, sendo 80% para treinar o modelo e 20%
 para treinar.
@@ -53,18 +51,20 @@ View(predict(model, teste))
 predito<-predict(model,teste)
 per<- teste %>% select("city", "total")%>%
   mutate(predito) %>% mutate(erro= total-predito )%>%
-  mutate(erro_abs= abs(erro))%>%mutate(erro_perc= erro/total)%>% mutate(erro_percabs= abs(erro_perc))
-
-View(per)
+  mutate(erro_abs= abs(erro))%>%mutate(erro_perc= erro/total)%>% 
+  mutate(erro_percabs= abs(erro_perc))
+per[,c(4:7)]<-round(per[,c(4:7)], 5)
 
 # Calculando o erro medio absoluto e percentual medio
 erro_medio<- mean(per$erro_abs); erro_medio
 erro_percmed<- mean(per$erro_percabs); erro_percmed
-summary(per$erro_percabs)
+quart<-summary(per$erro_percabs)
 
 # Calculando o coeficiente de determinacao
-rsquad<- summary(model)
-rsquad$adj.r.squared
+resumo<- summary(model)
+r2<- resumo$adj.r.squared
+performance<- data.frame(erro_medio, erro_percmed,r2)
+performance
 ```
 
 
