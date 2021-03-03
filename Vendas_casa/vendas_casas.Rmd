@@ -18,18 +18,15 @@ View(dados)
 
 # Limpeza e Preparação dos dados
 
-Organização do cabeçalho e da variável cidade
+\n Organização do cabeçalho para que seja possível manusear as variáveis com mais facilidade.
 ```{r}
 # Exlcuindo os caracteres ..R.. que estão depois do nome da variavel.
 cab<-names(dados)
 cab<-cab%>% str_remove_all("..R..")
 colnames(dados)<- cab
-
-# Substituindo SÃ£o Paulo por Sao Paulo
-#dados<-str_replace_all(dados,"SÃ£o Paulo", "São Paulo")
 ```
-Os dados são separados em treino e teste, sendo 80% para treinar o modelo e 20%
-para treinar.
+\n Os dados são separados em treino e teste, sendo 80% para treinar e 20%
+para testar o modelo.
 ```{r}
 n_treino<- (70/100)*ndados
 set.seed(100)
