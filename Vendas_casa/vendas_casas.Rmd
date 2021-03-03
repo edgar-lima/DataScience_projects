@@ -149,8 +149,12 @@ summary(per3$erro_percabs)
 # Comparação entre os três modelos
 ```{r}
 per_mod1<- per_mod[,-3]
-
-rbind(per_mod1, per_mod2, per_mod3)
+Modelo<- c("Regressão Linear", "Arv. Regressão", "Random Forest")
+erro_med<-c(per_mod$erro_medio, per_mod2$erro_medio2, per_mod3$erro_medio3)
+erro_permed<-c(per_mod$erro_percmed, per_mod2$erro_percmed2,
+                per_mod3$erro_percmed3)
+resultado<- cbind(Modelo, erro_med, erro_permed)
+resultado
 ```
 
 
