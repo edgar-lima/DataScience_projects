@@ -19,9 +19,11 @@ View(dados)
 # Limpeza e Preparação dos dados
 
 ```{r}
-a<- dados%>% select(hoa)%>%
+mineirados<- dados%>%select(-(hoa:total))
+
+hoa<- dados%>% select(hoa)%>%
   str_replace_all(",",".")%>% str_remove_all("[R&$]")
-View(a)
+
 
 ```
 
