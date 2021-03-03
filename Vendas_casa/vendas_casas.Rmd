@@ -20,7 +20,7 @@ View(dados)
 Os dados são separados em treino e teste, sendo 80% para treinar o modelo e 20%
 para treinar.
 ```{r}
-
+dados<- dados%>%str_replace_all(",", ".")
 
 n_treino<- (70/100)*ndados
 set.seed(100)
