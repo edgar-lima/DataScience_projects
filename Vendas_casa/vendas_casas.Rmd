@@ -54,8 +54,8 @@ per<- teste %>% select("city", "total")%>%
 per[,c(4:7)]<-round(per[,c(4:7)], 5)
 
 # Calculando o erro medio absoluto e percentual medio
-erro_medio<- mean(per$erro_abs); erro_medio
-erro_percmed<- mean(per$erro_percabs); erro_percmed
+erro_medio<- mean(per$erro_abs)
+erro_percmed<- mean(per$erro_percabs)
 summary(per$erro_percabs)
 ```
 
