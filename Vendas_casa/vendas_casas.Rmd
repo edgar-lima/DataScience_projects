@@ -11,22 +11,25 @@ output:
 setwd("D:\\07 04 2020\\Documents\\Edgar\\Projetos\\Data_sciece\\DataScience_projects\\Vendas_casa")
 library("tidyverse")
 
-dados<- read.csv("houses_to_rent.csv", header = T)
+dados<- read.csv("houses_to_rent_v2.csv", header = T)
 ndados<-nrow(dados) 
 View(dados)
 ```
 
 # Limpeza e Preparação dos dados
 
+Organização do cabeçalho e da variável cidade
 ```{r}
-mineirados<- dados%>%select(-(hoa:total))
+# Exlcuindo os caracteres ..R.. que estão depois do nome da variavel.
+cab<-names(dados)
+cab<-cab%>% str_remove_all("..R..")
+colnames(dados)<- cab
 
-hoa<- dados%>% select(hoa)%>%
-  str_replace_all(",",".")%>% str_remove_all("[R&$]")
+# Substituindo SÃ£o Paulo por Sao Paulo
+
 
 
 ```
-
 Os dados são separados em treino e teste, sendo 80% para treinar o modelo e 20%
 para treinar.
 ```{r}
@@ -35,13 +38,11 @@ set.seed(100)
 ua<- sample(n_treino)
 treino<- dados[ua,]; View(treino)
 teste<- dados[-ua,]; View(teste)
-
 ```
 
 
 # Treinamento do modelo
 ```{r}
-
 model<- lm(total~.,data= treino)
 View(predict(model, teste))
 
@@ -49,10 +50,11 @@ View(predict(model, teste))
 
 # Avaliação da performance do modelo
 ```{r}
-predito<-predict(model2,teste)
-per<- teste %>% select("id", "price")%>%
-  mutate(predito) %>% mutate(erro= price-predito )%>%
-  mutate(erro_abs= abs(erro))%>%mutate(erro_perc= erro/price)%>% mutate(erro_percabs= abs(erro_perc))
+predito<-predict(model,teste)
+per<- teste %>% select("city", "total")%>%
+  mutate(predito) %>% mutate(erro= total-predito )%>%
+  mutate(erro_abs= abs(erro))%>%mutate(erro_perc= erro/total)%>% mutate(erro_percabs= abs(erro_perc))
+
 View(per)
 
 # Calculando o erro medio absoluto e percentual medio
