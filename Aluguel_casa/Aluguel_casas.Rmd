@@ -1,15 +1,15 @@
 ---
-title: 'Aluguel de casas: fazendo predições sobre os valores de aluguéis.'
+title: 'Fazendo predições sobre os valores de aluguéis residênciais.'
 output:
   pdf_document: default
   html_notebook: default
 
 ---
 
-O obejetivo é fazer predições a cerca do valor médio do aluguel residencial. O conjunto de dados possue um total de 10962 casas, e contém as seguintes variáveis:
+O obejetivo é fazer predições a cerca do valor médio do aluguel residêncial. O conjunto de dados possue um total de 10962 casas, e contém as seguintes variáveis:
   
   * City: cidade onde o imóvel está localizado.
-  * Area: área do imovel.
+  * Area: área do imóvel.
   * Rooms: número de quartos.
   * Bathroom: número de banheiros.
   * Parking spaces: número de vagas.
@@ -173,6 +173,7 @@ erro_permed<-c(per_mod$erro_percmed, per_mod2$erro_percmed2,
 resultado<- cbind(Modelo, erro_med, erro_permed)
 resultado
 ```
+
 
 
 
