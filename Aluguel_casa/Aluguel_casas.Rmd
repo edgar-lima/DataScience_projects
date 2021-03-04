@@ -6,21 +6,7 @@ output:
 
 ---
 
-O obejetivo é fazer predições a cerca do valor médio do aluguel residêncial. O conjunto de dados possue um total de 10962 casas, e contém as seguintes variáveis:
-  
-  * City: cidade onde o imóvel está localizado.
-  * Area: área do imóvel.
-  * Rooms: número de quartos.
-  * Bathroom: número de banheiros.
-  * Parking spaces: número de vagas.
-  * Floor: Andar.
-  * Animal: se aceita animais.
-  * Furniture: se é mobilhada.
-  * Hoa: valor do condomínio.
-  
-Os dados foram obtidos através do Kaggle: <https://www.kaggle.com/rubenssjr/brasilian-houses-to-rent>
-
-
+O obejetivo é fazer predições a cerca do valor médio do aluguel residêncial. O conjunto de dados possue um total de 10962 casas. Os dados foram obtidos através do Kaggle: <https://www.kaggle.com/rubenssjr/brasilian-houses-to-rent>
 
 
 # Importação dos dados
@@ -67,43 +53,7 @@ Modelo construído utilizando regressão linear múltipla.
 
 ```{r}
 model<- lm(total~.,data= treino)
-
 ```
-
-
-# Testando os pressupostos do modelo
-
-Os modelos de regressão possuem pressupostos para que as suas estimativas sejam confiáveis, sendo que esses pressupostos são a (i) não colinearidade entre as variáveis preditoras; (ii) ausencia de amostras com valores discrepantes;(iii) heterocedasticidade e (iV) normalidade dos resíduos
-
-
-1. _Colinearidade_:  O teste de colinearidade foi realizado utilizando o Variance Inflation Factor (VIF), variáveis com valores de VIF iguais ou maiores de 7 serão retiradas do modelo.
-```{r}
-car::vif(model)
-```
-De acordo com o valores de VIF as variáveis rent.amount e fire.insurance, ambos com valores 81.55 e 83.43 respectivamente.
-
-
-2. _Pontos discrepantes_:  a existência de pontos discrepantes foi verificada através de análise gráfica da distância de cook, pontos com valores acimo de 1 são considerados discrepantes.
-```{r}
-plot(cooks.distance(model))
-abline(h=1,col="red")
-```
-O gráfico mostra que não há pontos discrepantes.
-
-
-3. _Heterocedasticidade_: a heterocedasticidade significa que as variáncias são constantes, e será avaliada de maneira gráfica, onde no eixo x estão os valores preditos pelo modelo e no eixo y estão os valores dos resíduos do modelo.
-```{r, message= F}
-plot(x = predict(model),y=residuals(model))
-
-```
-Para interpretação gráfica é levado em consideração se a relação dos valores preditos e os resíduos não apresenta um padrão ou tendência. Como pode ser visto no gráfico acima existe um certo padrão na distribuição dos pontos, sendo assim o modelo não atende o pressuposto de heterocedasticidade.
-
-
-4. _Normalidade dos resíduos_: o pressuposto de normalidade dos resíduos também é checado de maneira gráfica, onde no eixo x colocado os quantis e no eixo y é colocado os resíduos padronizados.
-```{r, message=F}
-car::qqPlot(model)
-```
-Os resíduos são considerados normais quando é identificado um padrão de realçao linear positiva entre o eixo x e y. Com isso podemos concluir que os resíduos do modelo em questão não segue uma distribuição normal.
 
 # Avaliação da performance do modelo
 
