@@ -1,15 +1,31 @@
 ---
-title: 'Aluguel de casas: fazendo predições sobre o valor do aluguel de casas.'
-autor: "Egar Luiz de Lima"
+title: 'Aluguel de casas: fazendo predições sobre os valores de aluguéis.'
 output:
   pdf_document: default
   html_notebook: default
 
 ---
 
+O obejetivo é fazer predições a cerca do valor médio do aluguel residencial. O conjunto de dados possue um total de 10962 casas, e contém as seguintes variáveis:
+  
+  * City: cidade onde o imóvel está localizado.
+  * Area: área do imovel.
+  * Rooms: número de quartos.
+  * Bathroom: número de banheiros.
+  * Parking spaces: número de vagas.
+  * Floor: Andar.
+  * Animal: se aceita animais.
+  * Furniture: se é mobilhada.
+  * Hoa: valor do condomínio.
+  
+Os dados foram obtidos através do Kaggle: <https://www.kaggle.com/rubenssjr/brasilian-houses-to-rent>
+
+
+
+
 # Importação dos dados
 
-```{r, eval=TRUE}
+```{r, message=FALSE}
 setwd("D:\\07 04 2020\\Documents\\Edgar\\Projetos\\Data_sciece\\DataScience_projects\\Aluguel_casa")
 library("tidyverse")
 library("rpart")
