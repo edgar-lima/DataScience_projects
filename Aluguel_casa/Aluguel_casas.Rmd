@@ -10,7 +10,7 @@ output:
 # Importação dos dados
 
 ```{r, eval=TRUE}
-setwd("D:\\07 04 2020\\Documents\\Edgar\\Projetos\\Data_sciece\\DataScience_projects\\Vendas_casa")
+setwd("D:\\07 04 2020\\Documents\\Edgar\\Projetos\\Data_sciece\\DataScience_projects\\Aluguel_casa")
 library("tidyverse")
 library("rpart")
 library("randomForest")
