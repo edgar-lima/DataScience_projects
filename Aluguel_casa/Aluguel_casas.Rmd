@@ -1,5 +1,6 @@
 ---
-title: 'Aluguel de casas: fazendo predições sobre o valor de aluguel decasas.'
+title: 'Aluguel de casas: fazendo predições sobre o valor do aluguel de casas.'
+autor: "Egar Luiz de Lima"
 output:
   pdf_document: default
   html_notebook: default
