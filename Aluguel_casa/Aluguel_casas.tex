@@ -130,7 +130,6 @@ dados foram obtidos através do Kaggle:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dados\textless{}{-}}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"houses\_to\_rent\_v2.csv"}\NormalTok{, }\DataTypeTok{header =}\NormalTok{ T)}
-\NormalTok{ndados\textless{}{-}}\KeywordTok{nrow}\NormalTok{(dados) }
 \KeywordTok{View}\NormalTok{(dados)}
 \end{Highlighting}
 \end{Shaded}
@@ -140,14 +139,41 @@ dados foram obtidos através do Kaggle:
 dados}\label{limpeza-e-preparauxe7uxe3o-dos-dados}}
 
 Organização do cabeçalho para que seja possível manusear as variáveis
-com mais facilidade.
+com mais facilidade. E retirando linhas em que não consta a indicação do
+andar.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Exlcuindo os caracteres ..R.. que estão depois do nome da variavel.}
+\KeywordTok{str}\NormalTok{(dados)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    10692 obs. of  13 variables:
+##  $ city               : chr  "SÃ£o Paulo" "SÃ£o Paulo" "Porto Alegre" "Porto Alegre" ...
+##  $ area               : int  70 320 80 51 25 376 72 213 152 35 ...
+##  $ rooms              : int  2 4 1 2 1 3 2 4 2 1 ...
+##  $ bathroom           : int  1 4 1 1 1 3 1 4 2 1 ...
+##  $ parking.spaces     : int  1 0 1 0 0 7 0 4 1 0 ...
+##  $ floor              : chr  "7" "20" "6" "2" ...
+##  $ animal             : chr  "acept" "acept" "acept" "acept" ...
+##  $ furniture          : chr  "furnished" "not furnished" "not furnished" "not furnished" ...
+##  $ hoa..R..           : int  2065 1200 1000 270 0 0 740 2254 1000 590 ...
+##  $ rent.amount..R..   : int  3300 4960 2800 1112 800 8000 1900 3223 15000 2300 ...
+##  $ property.tax..R..  : int  211 1750 0 22 25 834 85 1735 250 35 ...
+##  $ fire.insurance..R..: int  42 63 41 17 11 121 25 41 191 30 ...
+##  $ total..R..         : int  5618 7973 3841 1421 836 8955 2750 7253 16440 2955 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{cab\textless{}{-}}\KeywordTok{names}\NormalTok{(dados)}
 \NormalTok{cab\textless{}{-}cab}\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{str\_remove\_all}\NormalTok{(}\StringTok{"..R.."}\NormalTok{)}
 \KeywordTok{colnames}\NormalTok{(dados)\textless{}{-}}\StringTok{ }\NormalTok{cab}
+\NormalTok{excl\textless{}{-}}\StringTok{ }\NormalTok{dados}\OperatorTok{$}\NormalTok{floor}\OperatorTok{\%\textgreater{}\%}\KeywordTok{str\_which}\NormalTok{(}\StringTok{"{-}"}\NormalTok{)}
+\NormalTok{dados\textless{}{-}}\StringTok{ }\NormalTok{dados[}\OperatorTok{{-}}\NormalTok{excl,]}
+\NormalTok{ndados\textless{}{-}}\StringTok{ }\KeywordTok{nrow}\NormalTok{(dados)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -202,7 +228,7 @@ erros dentro de quartis.
 
 \begin{verbatim}
 ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## 0.0000000 0.0000300 0.0000600 0.0002021 0.0001500 0.2589400
+## 0.0000000 0.0000300 0.0000700 0.0002436 0.0001700 0.2589200
 \end{verbatim}
 
 Cálculo do coeficiente de determinação (R²), ele varia entre 0 e 1 e
@@ -221,7 +247,7 @@ melhor a performance do modelo.
 
 \begin{verbatim}
 ##   erro_medio erro_percmed        r2
-## 1  0.7203906  0.000202048 0.9999999
+## 1  0.7663743 0.0002435668 0.9999999
 \end{verbatim}
 
 \hypertarget{treinamento-do-modelo-1}{%
@@ -262,7 +288,7 @@ Também foi avaliado a distribuição dos erros dentro de quartis.
 
 \begin{verbatim}
 ##   erro_medio2 erro_percmed2
-## 1     1976.68     0.6174459
+## 1    1911.981     0.5758513
 \end{verbatim}
 
 \begin{Shaded}
@@ -273,7 +299,7 @@ Também foi avaliado a distribuição dos erros dentro de quartis.
 
 \begin{verbatim}
 ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## 0.000388 0.188901 0.385246 0.617446 0.720171 6.023329
+## 0.000784 0.186709 0.380779 0.575851 0.698671 5.846700
 \end{verbatim}
 
 \hypertarget{treinamento-do-modelo-2}{%
@@ -315,8 +341,8 @@ Também foi avaliado a distribuição dos erros dentro de quartis.
 \end{Shaded}
 
 \begin{verbatim}
-##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-##  0.000000  0.005537  0.011725  0.034447  0.024032 10.178200
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##  0.00000  0.00540  0.01230  0.03504  0.02474 23.05960
 \end{verbatim}
 
 \hypertarget{comparauxe7uxe3o-entre-os-truxeas-modelos}{%
@@ -337,9 +363,14 @@ modelos}\label{comparauxe7uxe3o-entre-os-truxeas-modelos}}
 
 \begin{verbatim}
 ##      Modelo             erro_med            erro_permed           
-## [1,] "Regressão Linear" "0.720390595386534" "0.000202048004987531"
-## [2,] "Arv. Regressão"   "1976.67992501656"  "0.617445941510005"   
-## [3,] "Random Forest"    "183.223950888404"  "0.0344469856608479"
+## [1,] "Regressão Linear" "0.766374311740891" "0.000243566801619433"
+## [2,] "Arv. Regressão"   "1911.98098579908"  "0.575851318110582"   
+## [3,] "Random Forest"    "186.284159012146"  "0.0350397651821862"
 \end{verbatim}
+
+A regressão linear apresentou a melhor perfomance de predição para os
+valores de aluguel residencial (R²= 0.999). Com um erro médio de 0.766 e
+um erro percentual de 0.0002\%. Já Os algoritmos de árvore de regressão
+e random forest apresentaram 57 e 3.5\% por cento de erro médio.
 
 \end{document}
