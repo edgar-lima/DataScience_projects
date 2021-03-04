@@ -83,11 +83,22 @@ car::vif(model)
 De acordo com o valores de VIF as variáveis rent.amount e fire.insurance, ambos com valores 81.55 e 83.43 respectivamente.
 
 
-
+2. _Pontos discrepantes_:  a existência de pontos discrepantes foi verificada através de análise gráfica da distância de cook, pontos com valores acimo de 1 são considerados discrepantes.
 ```{r}
 plot(cooks.distance(model))
 abline(h=1,col="red")
 ```
+O gráfico mostra que não há pontos discrepantes.
+
+
+3. _Heterocedasticidade_: a heterocedasticidade significa que as variáncias são constantes, e será avaliada de maneira gráfica, onde no eixo x estão os valores preditos pelo modelo e no eixo y estão os valores dos resíduos do modelo.
+```{r, message= F}
+plot(x = predict(model),y=residuals(model))
+
+```
+Para interpretação gráfica é levado em consideração se a relação dos valores preditos e os resíduos não apresenta um padrão ou tendência. Como pode ser visto no gráfico acima existe um certo padrão na distribuição dos pontos, sendo assim o modelo não atende o pressuposto de heterocedasticidade.
+
+
 
 
 # Avaliação da performance do modelo
