@@ -71,6 +71,25 @@ model<- lm(total~.,data= treino)
 ```
 
 
+# Testando os pressupostos do modelo
+
+Os modelos de regressão possuem pressupostos para que as suas estimativas sejam confiáveis, sendo que esses pressupostos são a (i) não colinearidade entre as variáveis preditoras; (ii) ausencia de amostras com valores discrepantes;(iii) heterocedasticidade e (iV) normalidade dos resíduos
+
+
+1. _Colinearidade_:  O teste de colinearidade foi realizado utilizando o Variance Inflation Factor (VIF), variáveis com valores de VIF iguais ou maiores de 7 serão retiradas do modelo.
+```{r}
+car::vif(model)
+```
+De acordo com o valores de VIF as variáveis rent.amount e fire.insurance, ambos com valores 81.55 e 83.43 respectivamente.
+
+
+
+```{r}
+plot(cooks.distance(model))
+abline(h=1,col="red")
+```
+
+
 # Avaliação da performance do modelo
 
 Para a avaliação da performance do modelo foi utilizado três métricas, sendo elas erro médio absoluto, percentual médio do erro absoluto e coeficiente de determinação (R²). Também foi avaliado a distribuição dos erros dentro de quartis.
