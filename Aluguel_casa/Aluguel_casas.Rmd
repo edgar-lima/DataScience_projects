@@ -99,7 +99,11 @@ plot(x = predict(model),y=residuals(model))
 Para interpretação gráfica é levado em consideração se a relação dos valores preditos e os resíduos não apresenta um padrão ou tendência. Como pode ser visto no gráfico acima existe um certo padrão na distribuição dos pontos, sendo assim o modelo não atende o pressuposto de heterocedasticidade.
 
 
-
+4. _Normalidade dos resíduos_: o pressuposto de normalidade dos resíduos também é checado de maneira gráfica, onde no eixo x colocado os quantis e no eixo y é colocado os resíduos padronizados.
+```{r, message=F}
+car::qqPlot(model)
+```
+Os resíduos são considerados normais quando é identificado um padrão de realçao linear positiva entre o eixo x e y. Com isso podemos concluir que os resíduos do modelo em questão não segue uma distribuição normal.
 
 # Avaliação da performance do modelo
 
